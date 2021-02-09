@@ -13,7 +13,7 @@ services:
       - ./wagtail:/code/wagtail:delegated,rw
       - ./bakerydemo:/code/bakerydemo:delegated,rw
     ports:
-      - "8000:8000"
+      - "9000:8000"
     environment:
       DATABASE_URL: postgres://wagtail:changeme@db/wagtail
       PYTHONPATH: /code/wagtail:/code/bakerydemo:$PYTHONPATH
@@ -46,3 +46,21 @@ services:
       - |
         cp -ru /node_modules /code/wagtail
         npm run start
+
+  # CNK run another web site leveraging the db and mounted wagtail source code
+  tutorial:
+    container_name: "tutorial"
+    build: ./
+    working_dir: /code/tutorial
+    command: ./manage.py runserver 0.0.0.0:8787
+    volumes:
+      - ./wagtail:/code/wagtail:delegated,rw
+      - ./tutorial:/code/tutorial:delegated,rw
+    ports:
+      - "8787:8787"
+    environment:
+      DATABASE_URL: postgres://wagtail:changeme@db/tutorial
+      PYTHONPATH: /code/wagtail:/code/tutorial:$PYTHONPATH
+    depends_on:
+      - db
+      - frontend
