@@ -50,7 +50,9 @@ services:
   # CNK run another web site leveraging the db and mounted wagtail source code
   tutorial:
     container_name: "tutorial"
-    build: ./
+    build: 
+      context: .
+      dockerfile: Dockerfile.tutorial
     working_dir: /code/tutorial
     command: ./manage.py runserver 0.0.0.0:8787
     volumes:
