@@ -17,7 +17,7 @@ Open a terminal and follow those instructions:
 # 1. Decide where to put the project. We use "~/Development" in our examples.
 cd ~/Development
 # 2. Clone the docker-wagtail-develop repository in a new "wagtail-dev" folder.
-git clone git@github.com:wagtail/docker-wagtail-develop.git wagtail-dev
+git clone https://github.com/wagtail/docker-wagtail-develop.git wagtail-dev
 # 3. Move inside the new folder.
 cd wagtail-dev/
 # 4. Run the setup script. This will check out the bakerydemo project and local copies of wagtail and its dependencies.
@@ -43,7 +43,7 @@ Once the build is complete:
 # 6. Start your containers and wait for them to finish their startup scripts.
 docker-compose up
 # 7. Now in a new shell, run the databse setup script. The database will be persisted across container executions by Docker's Volumes system so you will only need to run this commmand the first time you start the database.
-setup-db.sh
+./setup-db.sh
 # Success!
 ```
 
