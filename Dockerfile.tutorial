@@ -1,5 +1,5 @@
 # Use an official Python runtime as a parent image
-FROM python:3.8
+FROM python:3.8-bullseye
 LABEL maintainer="hello@wagtail.io"
 
 # Set environment varibles
@@ -12,7 +12,7 @@ RUN apt-get update -y \
     && apt-key add /tmp/pg-repo.asc \
     && echo "deb http://apt.postgresql.org/pub/repos/apt/ buster-pgdg main" >  /etc/apt/sources.list.d/pgdg.list \
     && apt-get update -y \
-    && apt-get install -y libenchant-dev postgresql-client-12 \
+    && apt-get install -y libenchant-2-dev postgresql-client-12 \
     && apt-get install -y default-mysql-client \
     && mkdir -p /code/requirements
 
