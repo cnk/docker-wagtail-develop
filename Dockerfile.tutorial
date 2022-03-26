@@ -1,13 +1,13 @@
 # Use an official Python runtime as a parent image
 FROM python:3.8-bullseye
-LABEL maintainer="hello@wagtail.io"
+LABEL maintainer="hello@wagtail.org"
 
 # Set environment varibles
 ENV PYTHONUNBUFFERED 1
 
 # Add PG apt repository, then install libenchant and postgres-client-12
 RUN apt-get update -y \
-    && apt-get install gnupg2 \
+    && apt-get install -y gnupg2 \
     && wget --quiet -O /tmp/pg-repo.asc https://www.postgresql.org/media/keys/ACCC4CF8.asc \
     && apt-key add /tmp/pg-repo.asc \
     && echo "deb http://apt.postgresql.org/pub/repos/apt/ buster-pgdg main" >  /etc/apt/sources.list.d/pgdg.list \
