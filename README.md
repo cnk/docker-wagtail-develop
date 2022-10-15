@@ -54,7 +54,7 @@ WARNINGS:
 
             File not found: /code/wagtail/wagtail/admin/static/wagtailadmin/css/normalize.css```
 
-``` 
+```
 
 ```sh
 # 7. Now in a new shell, run the databse setup script. The database will be persisted across container executions by Docker's Volumes system so you will only need to run this commmand the first time you start the database.
@@ -66,6 +66,8 @@ If you're running this on Linux you might get into some privilege issues that ca
 ```sh
 CURRENT_UID=$(id -u):$(id -g) docker-compose -f docker-compose.yml -f docker-compose.linux.yml up
 ```
+
+Alternatively, if you're using VSCode and have the "Remote - Containers" extension, you can open the command palette and select "Remote Containers - Reopen in Container" to attach VSCode to the container. This allows for much deeper debugging.
 
 - Visit your site at http://localhost:8000
 - The admin interface is at http://localhost:8000/admin/ - log in with `admin` / `changeme`.
@@ -84,27 +86,131 @@ frontend   docker-entrypoint.sh /bin/ ...   Up
 web        ./manage.py runserver 0.0. ...   Up          0.0.0.0:8000->8000/tcp
 ```
 
+### Build the backend Docker image
+```sh
+make build
+```
+or
+```sh
+docker-compose build web
+```
+
+### Bring the backend Docker container up
+
+```sh
+make start
+```
+or
+```sh
+docker-compose up
+```
+
+### Stop all Docker containers
+
+```sh
+make stop
+```
+or
+```sh
+docker-compose stop
+```
+### Stop all and remove all Docker containers
+
+```sh
+make down
+```
+or
+```sh
+docker-compose down
+```
+	
 ### Run tests
+
+```sh
+make test
+```
+or
 ```sh
 docker-compose exec -w /code/wagtail web python runtests.py
 ```
 
-### You can open a django shell session
+### Run tests for a specific file
 
+```sh
+make test file=wagtail.admin.tests.test_name.py
+```
+or
+```sh
+docker-compose exec -w /code/wagtail web python runtests.py wagtail.admin.tests.{test_file_name_here}.py
+```
+
+### Open a Django shell session
+
+```sh
+make ssh-shell
+```
+or
 ```sh
 docker-compose exec web python manage.py shell
 ```
 
-### You can open a shell on the web server
+### Open a PostgreSQL shell session
 
+```sh
+make ssh-db
+```
+or
+```sh
+docker-compose exec web python manage.py dbshell
+```
+### Open a shell on the web server
+
+```sh
+make ssh
+```
+or
 ```sh
 docker-compose exec web bash
 ```
 
-### You can open a shell to work with the frontend code (Node/NPM)
+### Open a shell to work with the frontend code (Node/NPM)
 
 ```sh
+make ssh-fe
+```
+or
+```sh
 docker-compose exec frontend bash
+```
+
+### Open a shell to work within the wagtail container
+
+```sh
+make ssh-fe
+```
+or
+```sh
+docker-compose exec -w /code/wagtail web bash
+```
+
+### Make migrations to the wagtail bakery site
+
+```sh
+make migrations
+```
+or
+```sh
+docker-compose exec web python manage.py makemigrations
+```
+
+### Migrate the wagtail bakery site
+
+```sh
+make migrate
+```
+or
+```sh
+docker-compose exec web python manage.py migrate
 ```
 
 Getting ready to contribute
@@ -123,6 +229,12 @@ git remote add upstream git@github.com:wagtail/wagtail.git
 # Pull latest changes from all remotes / forks.
 git pull --all
 ```
+
+Contributing to Willow
+----------------------
+
+You can use the same setup to contribute to Willow.
+You simply do the same operations to fork the Willow project and point your local copy of Willow to your fork.
 
 
 TODO
